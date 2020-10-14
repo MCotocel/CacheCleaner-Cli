@@ -1,0 +1,59 @@
+#!/usr/bin/env/python3
+import os
+
+os.system("echo \"\nPrevious disk space:\n\n$(df -h .)\" > /tmp/CacheCleanerBefore")
+
+CONFIRM_CLEAN = input("\nProceed with cleaning cache? (y/n)\n\n> ")
+CONFIRM_CLEAN = CONFIRM_CLEAN.lower()
+
+
+def main():
+    if CONFIRM_CLEAN == 'n':
+        exit()
+
+    elif CONFIRM_CLEAN == 'y':
+
+        SafariConfirm = input("\nClean Safari cache? (y/n)\n\n> ")
+        if SafariConfirm == 'y':
+            os.system("rm -rf ~/Library/Containers/com.apple.Safari/Data/Library/Caches/com.apple.Safari/WebKitCache/Version\ 16/* > /dev/null")
+        else:
+            pass
+
+        MSTeams = input("\nClean Microsoft Teams cache? (y/n)\n\n> ")
+        if MSTeams == 'y':
+            os.system("rm -rf ~/Library/Application\ Support/Microsoft/Teams/Service\ Worker/CacheStorage/* > /dev/null; rm -rf ~/Library/Application\ Support/Microsoft/Teams/Cache/* > /dev/null")
+
+        XcodeConfirm = input("\nClean Xcode cache and delete unused simulators? (y/n)\n\n> ")
+        if XcodeConfirm == 'y':
+            os.system("rm -rf ~/Library/Developer/CoreSimulator/Caches/dyld/* > /dev/null; xcrun simctl delete unavailable > /dev/null")
+        else:
+            pass
+
+        VSCodeConfirm = input("\nClean Visual Studio Code cache? (y/n)\n\n> ")
+        if VSCodeConfirm == 'y':
+            os.system("rm -rf ~/Library/Application\ Support/Code/Cache/* > /dev/null; rm -rf ~/Library/Application\ Support/Code/CachedData/* > /dev/null")
+        else:
+            pass
+
+        LogConfirm = input("\nClean logs? (y/n)\n\n> ")
+        if LogConfirm == 'y':
+            os.system("sudo rm -rf ~/Library/Logs/* > /dev/null; sudo rm -rf /Library/logs/* > /dev/null")
+        else:
+            pass
+
+        TmpWifiConfirm = input("\nClean WiFiDiagnostics files? (y/n)\n\n> ")
+        if TmpWifiConfirm == 'y':
+            os.system("rm -rf /private/var/tmp/WiFiDiagnostics* > /dev/null")
+        else:
+            pass
+
+        BrewConfirm = input("\nClean brew caches? (y/n)\n\n> ")
+        if BrewConfirm == 'y':
+            os.system("brew cleanup > /dev/null; rm -rf ~/Library/Caches/Homebrew")
+        else:
+            pass
+
+        os.system("echo \"\n$(cat /tmp/CacheCleanerBefore)\"")
+        os.system("echo \"\nCurrent disk space:\n\n$(df -h .)\"")
+
+main()
