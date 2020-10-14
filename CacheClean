@@ -1,4 +1,4 @@
-#!/usr/bin/env/python3
+#!/usr/bin/python3
 import os
 
 os.system("echo \"\nPrevious disk space:\n\n$(df -h .)\" > /tmp/CacheCleanerBefore")
